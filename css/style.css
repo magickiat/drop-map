@@ -1,0 +1,12 @@
+#show-area {
+    width: 100%;
+    height: 500px;
+    background-color: lightgray;
+}
+
+.draggable {
+    width: 150px;
+    height: 150px;
+    padding: 0.5em;
+    border: 1px solid black;
+}
