@@ -187,6 +187,7 @@ function setSelectedDiv(id) {
 
 function view(id) {
     alert('view detail id = ' + id);
+    window.location.href = 'detail.html';
 }
 
 function deleteDiv(id) {
