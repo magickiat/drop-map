@@ -55,8 +55,8 @@ $(document).click(function (event) {
         });
 
         div.css({
-            top: event.pageY,
-            left: event.pageX,
+            top: event.pageY - offset.top,
+            left: event.pageX - offset.left,
             position: 'absolute'
         });
 
