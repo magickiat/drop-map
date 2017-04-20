@@ -16,10 +16,35 @@ $('#btnAdd').click(function () {
 });
 
 $('#btnClear').click(function () {
-   isAdd = false;
+    console.log('Clear...');
 
-   $('#show-area').html('');
+    isAdd = false;
+
+    $('#show-area').html('');
 });
+
+$('#btnSave').click(function () {
+    console.log('Save...');
+
+    isAdd = false;
+
+    $.each($('.draggable'), function (index, value) {
+        var div = $(value);
+        console.log(div.attr('id') + '\t"' + div.text() + '"');
+    });
+});
+
+$('#btnLoad').click(function () {
+    console.log('Load...');
+
+    isAdd = false;
+
+    $.each($('.draggable'), function (index, value) {
+        var div = $(value);
+        console.log(div.attr('id') + '\t"' + div.text() + '"');
+    });
+});
+
 
 
 $(document).click(function (event) {
@@ -61,7 +86,7 @@ $(document).click(function (event) {
         });
 
         isAdd = false;
-       
+
     }
 
 });
