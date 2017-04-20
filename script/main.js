@@ -38,7 +38,7 @@ $(document).click(function (event) {
         }
 
         var divId = 'tmpInput' + (divCount++);
-        var div = $('<div><img src="img/search.png" onclick="view(\'' + divId + '\')"/><div id="' + divId + '" class="draggable" >Hellooooooo</div></div>');
+        var div = $('<div><img src="img/search.png" onclick="view(\'' + divId + '\')"/><img src="img/close.png" onclick="deleteDiv(\'' + divId + '\')"/><div id="' + divId + '" class="draggable" >Hellooooooo</div></div>');
 
 
 
@@ -90,4 +90,8 @@ function setSelectedDiv(id) {
 
 function view(id) {
     alert('view detail id = ' + id);
+}
+
+function deleteDiv(id){
+    alert('delete id: ' + id);
 }
