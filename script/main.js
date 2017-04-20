@@ -20,7 +20,11 @@ $('#btnClear').click(function () {
 
     isAdd = false;
 
-    $('#show-area').html('');
+    $.each($('.containerDiv'), function (index, value) {
+        $(value).remove();
+    })
+
+    //$('#show-area').html('');
 });
 
 $('#btnSave').click(function () {
@@ -28,9 +32,20 @@ $('#btnSave').click(function () {
 
     isAdd = false;
 
-    $.each($('.draggable'), function (index, value) {
+
+    //พิกัดเริ่มต้นของ show area
+    var offset = $('#show-area').offset();
+
+    $.each($('.containerDiv'), function (index, value) {
         var div = $(value);
-        console.log(div.attr('id') + '\t"' + div.text() + '"');
+        var x = div.offset().left - offset.left;
+        var y = div.offset().top - offset.top;
+
+        // find value
+        var value = $('#' + div.attr('id').split('-')[1]).text();
+
+        console.log(div.attr('id') + '\t"' + div.text() + '"' + '\t(' + x + ',' + y + ')\t' + value);
+
     });
 });
 
@@ -39,11 +54,76 @@ $('#btnLoad').click(function () {
 
     isAdd = false;
 
-    $.each($('.draggable'), function (index, value) {
-        var div = $(value);
-        console.log(div.attr('id') + '\t"' + div.text() + '"');
+    $('#show-area').html('');
+
+    var data = [{
+            id: 1,
+            x: 1,
+            y: 1,
+            text: 'Hello 1'
+        },
+        {
+            id: 2,
+            x: 200,
+            y: 100,
+            text: 'Hello 2'
+        },
+        {
+            id: 3,
+            x: 400,
+            y: 200,
+            text: 'Hello 3'
+        }
+    ];
+
+    $.each(data, function (index, value) {
+        newDiv(value.id, value.x, value.y, value.text);
     });
 });
+
+$('#btnTestLoad').click(function () {
+    console.log('btnTestLoad...');
+
+    isAdd = false;
+
+    var offset = $('#show-area').offset();
+    console.log(offset.top + ' ' + offset.left);
+
+    newDiv(new Date().getTime(), 1, 1, '55555');
+});
+
+function newDiv(id, x, y, text) {
+
+
+    // สร้าง div ใหม่
+    var current = new Date().getTime();
+    var div = $('<div id="' + current + '" class="containerDiv containerDiv-' + id + '"><img src="img/search.png" onclick="view(\'' + id + '\')"/><img src="img/close.png" onclick="deleteDiv(\'' + current + '\')"/><div id="' + id + '" class="draggable" >' + text + '</div></div>');
+    $('body').append(div);
+
+    // set draggable
+    $(div).draggable();
+
+    //พิกัดเริ่มต้นของ show area
+    var offset = $('#show-area').offset();
+
+    var top = y + offset.top;
+    var left = x + offset.left;
+
+    console.log(top + ' ' + left);
+
+    div.css({
+        top: top,
+        left: left,
+        position: 'absolute'
+    });
+
+    // set event สำหรับแก้ไขค่า
+    $(div).dblclick(function () {
+        edit(id);
+    });
+
+
+}
 
 
 
@@ -62,28 +142,8 @@ $(document).click(function (event) {
             return;
         }
 
-        var divId = 'tmpInput' + (divCount++);
-        var current = new Date().getTime();
-        var div = $('<div id="' + current + '"><img src="img/search.png" onclick="view(\'' + divId + '\')"/><img src="img/close.png" onclick="deleteDiv(\'' + current + '\')"/><div id="' + divId + '" class="draggable" >Hellooooooo</div></div>');
-
-
-
-        $('#show-area').append(div);
-
-        // set draggable
-        $(div).draggable();
-
-        // set event สำหรับแก้ไขค่า
-        $(div).dblclick(function () {
-            // alert("Handler for .dblclick() called." + (div.attr('id')));
-            edit(div, divId);
-        });
-
-        div.css({
-            top: event.pageY - offset.top,
-            left: event.pageX - offset.left,
-            position: 'absolute'
-        });
+        var id = 'id' + new Date().getTime();
+        newDiv(id, event.pageX - offset.left, event.pageY - offset.top, 'Default');
 
         isAdd = false;
 
@@ -91,7 +151,7 @@ $(document).click(function (event) {
 
 });
 
-function edit(obj, divId) {
+function edit(divId) {
     var target = $('#' + divId);
 
     // target.removeAttr('onclick');
