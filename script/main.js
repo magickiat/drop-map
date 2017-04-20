@@ -38,7 +38,8 @@ $(document).click(function (event) {
         }
 
         var divId = 'tmpInput' + (divCount++);
-        var div = $('<div><img src="img/search.png" onclick="view(\'' + divId + '\')"/><img src="img/close.png" onclick="deleteDiv(\'' + divId + '\')"/><div id="' + divId + '" class="draggable" >Hellooooooo</div></div>');
+        var current = new Date().getTime();
+        var div = $('<div id="' + current + '"><img src="img/search.png" onclick="view(\'' + divId + '\')"/><img src="img/close.png" onclick="deleteDiv(\'' + current + '\')"/><div id="' + divId + '" class="draggable" >Hellooooooo</div></div>');
 
 
 
@@ -92,6 +93,7 @@ function view(id) {
     alert('view detail id = ' + id);
 }
 
-function deleteDiv(id){
+function deleteDiv(id) {
     alert('delete id: ' + id);
+    $('#' + id).remove();
 }
