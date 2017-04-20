@@ -54,7 +54,7 @@ $('#btnLoad').click(function () {
 
     isAdd = false;
 
-    $('#show-area').html('');
+    $('#btnClear').click();
 
     var data = [{
             id: 1,
@@ -81,16 +81,16 @@ $('#btnLoad').click(function () {
     });
 });
 
-$('#btnTestLoad').click(function () {
-    console.log('btnTestLoad...');
+// $('#btnTestLoad').click(function () {
+//     console.log('btnTestLoad...');
 
-    isAdd = false;
+//     isAdd = false;
 
-    var offset = $('#show-area').offset();
-    console.log(offset.top + ' ' + offset.left);
+//     var offset = $('#show-area').offset();
+//     console.log(offset.top + ' ' + offset.left);
 
-    newDiv(new Date().getTime(), 1, 1, '55555');
-});
+//     newDiv(new Date().getTime(), 1, 1, '55555');
+// });
 
 function newDiv(id, x, y, text) {
 
@@ -102,6 +102,9 @@ function newDiv(id, x, y, text) {
 
     // set draggable
     $(div).draggable();
+    $('#' + id).resizable();
+
+
 
     //พิกัดเริ่มต้นของ show area
     var offset = $('#show-area').offset();
