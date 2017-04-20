@@ -2,24 +2,24 @@ var isAdd = false;
 var divCount = 1;
 
 $(function () {
-
+    $("#btnAdd").button();
 });
 
 
 
-$('#btnAdd').click(
-    function () {
-        if (!isAdd) {
-            isAdd = true;
-        } else {
-            isAdd = false;
-        }
+$('#btnAdd').click(function () {
+    if (!isAdd) {
+        isAdd = true;
+    } else {
+        isAdd = false;
+    }
+});
 
-        $('#btnAdd').prop("disabled", isAdd);
+$('#btnClear').click(function () {
+   isAdd = false;
 
-    });
-
-
+   $('#show-area').html('');
+});
 
 
 $(document).click(function (event) {
@@ -61,7 +61,7 @@ $(document).click(function (event) {
         });
 
         isAdd = false;
-        $('#btnAdd').prop("disabled", isAdd);
+       
     }
 
 });
