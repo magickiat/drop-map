@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery-ui.theme.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .node {
+            cursor: pointer;
+        }
+
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+
+        .node text {
+            font: 12px sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <!-- Top NAV -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header"><a class="navbar-brand" href="#">Company: SADDD</a></div>
+        </div>
+    </nav>
+
+
+    <!-- Body -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tools">
+                    <a id="btnAdd" href="#" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                    <a id="btnClear" href="#" class="btn btn-warning"><i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
+                    <a id="btnSave" href="#" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a>
+                    <a id="btnLoad" href="#" class="btn btn-primary"><i class="fa fa-hdd-o" aria-hidden="true"></i> Load</a>
+                    <!--<a id="btnTestLoad" href="#" class="btn btn-primary"><i class="fa fa-hdd-o" aria-hidden="true"></i> Test Load</a>-->
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <canvas id="myCanvas" width="1024" height="1024"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="script/jquery-1.12.4.js"></script>
+    <script src="script/jquery-ui.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+
+    <script>
+        var boxPaddingX = 5;
+        var boxPaddingY = 20;
+        var boxPercentSize = 30;
+
+        var healthy = 'Healthy';
+        var warning = 'Warning';
+        var unHealthy = 'Unhealthy';
+        var unClassified = 'Unclassified';
+
+        function box(x, y, w, h, msg, percent, status) {
+
+            var color;
+
+            if (status === healthy) {
+                color = 'green'
+            } else if (status === warning) {
+                color = 'yellow';
+            } else if (status === unHealthy) {
+                color = 'red';
+            } else if (status === unClassified) {
+                color = 'gray';
+            } else {
+                color = 'white';
+            }
+
+            var c = document.getElementById('myCanvas');
+            var ctx = c.getContext("2d");
+
+            // main box
+            ctx.beginPath();
+            ctx.rect(x, y, w, h);
+            ctx.stroke();
+
+            ctx.beginPath();
+            wrapText(ctx, msg, x + boxPaddingX, y + boxPaddingY, w - boxPaddingX, boxPaddingY);
+
+            // percent box
+            ctx.beginPath();
+            ctx.rect(x, y + h - boxPercentSize, w, boxPercentSize);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.font = "14px Tahoma";
+            ctx.strokeText(percent, x + boxPaddingX, y + h - boxPercentSize + boxPaddingY);
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            ctx.font = "14px Tahoma";
+
+            var words = text.split(' ');
+            var line = '';
+            var countWrapLine = 0;
+
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + ' ';
+                var metrics = ctx.measureText(testLine);
+                var testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+
+                    countWrapLine++;
+                    if (countWrapLine > 3) {
+                        line += '...';
+                        break;
+                    }
+                } else {
+                    line = testLine;
+                }
+            }
+
+            ctx.fillText(line, x, y);
+        }
+
+        box(10, 10, 150, 150,
+            'HTML is the language for describing the structure of Web pages. HTML stands for HyperText Markup Language. Web pages consist of markup tags and plain text. HTML is written in the form of HTML elements consisting of tags enclosed in angle brackets (like <html>). HTML tags most commonly come in pairs like <h1> and </h1>, although some tags represent empty elements and so are unpaired, for example <img>..',
+            '100%', healthy);
+    </script>
+</body>
+
+</html>

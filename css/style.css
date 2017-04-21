@@ -8,5 +8,21 @@
     width: 150px;
     height: 150px;
     padding: 0.5em;
+    background-color: lightcoral;
     border: 1px solid black;
+}
+
+.box-data {
+    width: 150px;
+    height: 150px;
+    padding: 0.5em;
+    border: 1px solid black;
+}
+
+.box-data-child {
+    width: 40px;
+    height: 150px;
+    padding: 0.5em;
+    border: 1px solid black;
+    position: relative;
 }
